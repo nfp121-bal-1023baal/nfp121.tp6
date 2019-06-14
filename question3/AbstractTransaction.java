@@ -1,6 +1,7 @@
 package question3;
 
 import question1.*;
+import java.util.*;
 
 public abstract class AbstractTransaction{ 
     protected Cotisant cotisant;
@@ -24,6 +25,15 @@ public abstract class AbstractTransaction{
             rollbackTransaction();
             throw e;
         }
+    }
+    
+   
+     final public void credit(int somme)
+    {
+            beginTransaction();
+            this.somme = somme;
+            cotisant.credit(somme);
+            endTransaction();
     }
     
 }

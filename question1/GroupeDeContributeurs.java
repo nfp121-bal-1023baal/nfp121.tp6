@@ -1,5 +1,6 @@
 package question1;
 
+import question2.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,43 +13,80 @@ public class GroupeDeContributeurs extends Cotisant implements Iterable<Cotisant
   
   public GroupeDeContributeurs(String nomDuGroupe){
     super(nomDuGroupe);
-    // a completer
+    liste = new ArrayList<Cotisant>();
+    
   }
   
   public void ajouter(Cotisant cotisant){
-    // a completer
+    
+    liste.add(cotisant);
+    cotisant.setParent(this);
   }
   
   
   public int nombreDeCotisants(){
-    int nombre = 0;
-    // a completer
-    return nombre;
+    int nombre = 0;                             
+        Iterator<Cotisant> it = liste.iterator();
+        while(it.hasNext())
+        {                             
+            Cotisant c = it.next(); 
+            if(c instanceof Contributeur)
+            {nombre +=1; }
+            else
+            { nombre += c.nombreDeCotisants();} 
+        } 
+        return nombre; 
   }
   
   public String toString(){
     String str = new String();
-    // a completer
+    Iterator it = liste.iterator();
+    while(it.hasNext())
+    {
+        str += it.next() + "\n";
+    }
     return str;
   }
   
   public List<Cotisant> getChildren(){
-    return null;// a completer
+    return liste;
   }
   
   public void debit(int somme) throws SoldeDebiteurException{
-    // a completer
+      
+      
+        if(somme <  0) throw new RuntimeException("nombre négatif !!!"); 
+           
+        
+        else   
+             for(Cotisant c: this.liste)
+             {
+                 try{
+                       c.debit(somme); }
+                  catch( SoldeDebiteurException e)
+                 { throw new SoldeDebiteurException();}
+             } 
+        
   }
   
+  
+  
+  
   public void credit(int somme){
-    // a completer
+    if(somme <  0) throw new RuntimeException("nombre négatif !!!"); 
+       else
+            for(Cotisant c: liste)
+                 c.credit(somme);
+            
   }
   
   public int solde(){
     int solde = 0;
-    // a completer
+        for(Cotisant c: liste)
+            solde+=c.solde();
     return solde;
   }
+  
   
   // mÃ©thodes fournies
   

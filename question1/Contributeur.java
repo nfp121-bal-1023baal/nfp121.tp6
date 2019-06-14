@@ -6,7 +6,9 @@ public class Contributeur extends Cotisant{
   
   public Contributeur(String nom, int somme){
     super(nom);
-    // a completer
+    if(somme >= 0) solde = somme;
+    else throw new RuntimeException("nombre negative!!!");
+    
   }
   
   public int solde(){
@@ -16,22 +18,28 @@ public class Contributeur extends Cotisant{
   public int nombreDeCotisants(){
     return 1;
   }
-	public void debit(int somme) throws SoldeDebiteurException{
-	  // a completer
-	}
-	
-	/**
-	 * throws RuntimeException new RuntimeException("nombre négatif !!!");
-	 */
+public void debit(int somme) throws SoldeDebiteurException{
+    if( solde < somme)
+      {throw new SoldeDebiteurException();}
+      else if (somme < 0)
+        {throw new RuntimeException("nombre n�gatif !!!"); }
+        else{ this.solde -= somme; }
+        
+}
+    
+    /**
+     * throws RuntimeException new RuntimeException("nombre négatif !!!");
+     */
   public  void credit(int somme){
-	  // a completer
-	}
-	
-	/**
-	 * throws RuntimeException new RuntimeException("nombre négatif !!!");
-	 */
+      if(somme<0)  throw new RuntimeException("nombre negatif !!!");
+      else solde+=somme;
+    }
+    
+    /**
+     * throws RuntimeException new RuntimeException("nombre négatif !!!");
+     */
   public void affecterSolde(int somme){
-    // if(somme <0) throw new RuntimeException("nombre négatif !!!");
+     if(somme <0) throw new RuntimeException("nombre négatif !!!");
     try{
       debit(solde()); credit(somme);// mode élégant ... 
     }catch(SoldeDebiteurException sde){ 
@@ -43,6 +51,7 @@ public class Contributeur extends Cotisant{
   public <T> T accepter(Visiteur<T> visiteur){
     return visiteur.visite(this);
   }
+  
   
   public String toString(){
     return "<Contributeur : " + nom + "," + solde + ">";

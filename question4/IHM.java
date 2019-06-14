@@ -1,7 +1,6 @@
 package question4;
 
-import question1.Contributeur;
-import question1.GroupeDeContributeurs;
+import question1.*;
 import question2.*;
 import question3.*;
 import static question2.Main.*;
@@ -48,14 +47,35 @@ public class IHM extends JFrame {
             resultat.setText(Main.arbreXML(g)); //actualiser();
         }catch(Exception e){}
 
-        debiter.addActionListener(null/* a completer */);
-        crediter.addActionListener(null/* a completer */);
+        debiter.addActionListener(new ActionListener(){ 
+                public void actionPerformed(ActionEvent e){debiter();}});
+        crediter.addActionListener(new ActionListener(){ 
+                public void actionPerformed(ActionEvent e){crediter();}});
 
             
         this.pack();
         this.setVisible(true);
     }
+    
+    private void debiter()
+    {
+         AbstractTransaction transaction = new TransactionDebit(g); 
+             try{    
+                    int i =Integer.parseInt(somme.getText());
+                    transaction.debit(i);                            
+                    resultat.setText(Main.arbreXML(g)); 
+                 }catch(Exception e){} 
+    }
 
+    private void crediter()
+    {
+         AbstractTransaction transaction = new TransactionDebit(g); 
+            try{   
+                    int i =Integer.parseInt(somme.getText());
+                    transaction.credit(i);            
+                    resultat.setText(Main.arbreXML(g)); 
+                }catch(Exception e){} 
+    }
     public static void main() {
         new IHM();    
     }    

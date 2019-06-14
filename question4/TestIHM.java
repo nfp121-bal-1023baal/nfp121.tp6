@@ -49,4 +49,19 @@ public class TestIHM extends junit.framework.TestCase
             fail("exception inattendue ! " + e.getClass().getName());
         }
     }
+
+    public void testDebit()
+    {
+    }
+
+    public void testCredit()
+    {
+    }
+
+    public void testDebit_Credit()
+    {
+    }
 }
+
+
+
